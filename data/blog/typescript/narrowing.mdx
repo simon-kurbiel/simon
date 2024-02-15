@@ -1,0 +1,75 @@
+---
+title: 'Narrowing in Typescript'
+date: '2024-02-10'
+lastmod: '2023-02-10'
+tags: ['typescript']
+draft: false
+summary: 'An introduction to typescript narrowing for type safety in function'
+images: ['/static/images/twitter-card.png']
+---
+
+## Introduction
+
+Welcome! This is a basic introduction into narrowing in javascript.
+
+<TOCInline toc={props.toc} exclude="Introduction" />
+
+## The typeof type guards in javascript.
+
+These are the types that javascipt supports, although the list is not exhaustive.
+
+- "string"
+- "number"
+- "boolean"
+- "undefined"
+- "object"
+- "function"
+
+Now syppose you have a function with one parameter. The goal is to print every thing in there. The code can look something like this.
+
+```ts
+const printAll = (strs: string | string[] | null) => {
+  if (typeof strs === 'object') {
+    for (const s of strs) {
+      console.log(s)
+    }
+  } else if (typeof strs === 'string') {
+    console.log(strs)
+  } else {
+    // do nothing
+  }
+}
+```
+
+Now, it might not be very obvious, but this will raise an error in typescript. This is because `null` is also an `object`. This is one of the quirks of the language. To by pass this we can do truthiness narrowing
+
+## Truthiness narrowing
+
+if you have experience with low level language such as [C](<https://en.wikipedia.org/wiki/C_(programming_language)>), you will be familiar with checking whether a value is 0 which is falsy, whereas any other value is truthy.
+Javascript follows the same format. Any of these types will be identified as falsy (list is not exhaustive)
+
+- ""
+- undefined
+- null
+- 0
+- NaN
+
+## Refine code
+
+Now that we know which types will constitute a falsy value, lets refactor the code.
+
+```ts
+const printAll = (strs: string | string[] | null) => {
+  if (strs && typeof strs === 'object') {
+    for (const s of strs) {
+      console.log(s)
+    }
+  } else if (typeof strs === 'string') {
+    console.log(strs)
+  } else {
+    // do nothing
+  }
+}
+```
+
+The only thing needed in this case, was to make sure that `strs` was both truthy and an `object`
