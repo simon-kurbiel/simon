@@ -1,7 +1,7 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Simon Kurbiel',
-  author: 'Simob Kurbiel',
+  title: 'SimonCodes',
+  author: 'Simon Kurbiel',
   headerTitle: 'SimonCodes',
   description: 'A blog website for simon kurbiel',
   language: 'en-us',

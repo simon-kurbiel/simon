@@ -1,0 +1,67 @@
+---
+title: 'Analysis Of Algorithms'
+date: '2024-02-10'
+lastmod: '2024-02-10'
+tags: ['Data Structures']
+draft: false
+summary: 'Introduction to data structures and algorithms using analysis.'
+images: ['/static/images/twitter-card.png']
+---
+
+## Introduction
+
+This will be the introduction to data structures and algorithms. For the programming parts, most programs will be written in python, however, I might add C parts as well. Here is the table of contents.
+
+<TOCInline toc={props.toc} exclude="Introduction" />
+
+## Worst-case and Average-case Analysis
+
+### Linear Search Algorithm
+
+let us take a simple algorithm such as the linear search. We have a key $k$, and we would like to find it's index. Here is the algoriithm
+
+```py
+def linear_search(arr, key):
+    for i in range(len(arr)):
+        if arr[i] == key:
+            return i
+    return -1
+
+```
+
+#### worst-case
+
+The worst case will be mostly what we are looking for, not only because it is easier, but also because it is a good reflection of overall performance.
+In this case, the worst case is abviously $n$, if the key is the last item or if it doesn't exists at all. Because each iteration of the for loop will take some constant time $C$, in this case, the worst-case time of the algorithm is
+
+$$
+T(n) \le Cn+D
+$$
+
+The constant $D$ represents the maximum amount of time for all statements that are execute only once, independent of the variable $n$
+
+#### average case
+
+Calculating the average case is a bit more involved, so we will skip it as worst-case is what is mostly sought after.
+
+### Finding Max & Min of an Array
+
+Here is a python program to find the max and min of an Array
+
+```py
+def max_min(array:list)->tuple:
+    max:int =array[0]
+    min:int = array[0]
+
+    for i in range(1,len(array)):
+        if array[i] > max:
+            max = array[i]
+        elif array[i] < min:
+            min = array[i]
+
+    return min,max
+```
+
+#### worst case
+
+in this case, the worst case scenario is very simple to spot. The for loop will be executed at least $n-1$ times at skips the first index. However, the worst case scenario is if it is in a decending order, which means both if else blocks will be executed which makes our algorithm run $2(n-1)$ times
