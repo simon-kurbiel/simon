@@ -7,12 +7,23 @@ interface Project {
 
 const projectsData: Project[] = [
   {
-    title: 'A Search Engine',
-    description: `What if you could look up any information in the world? Webpages, images, videos
-    and more. Google has many features to help you find exactly what you're looking
-    for.`,
-    imgSrc: '/static/images/google.png',
-    href: 'https://www.google.com',
+    title: 'Lexer',
+    description: 'Build a lexical analyzer for the c programming language',
+    imgSrc: '/static/images/lexer.png',
+    href: 'https://github.com/simon-kurbiel/lexical-analysis',
+  },
+  {
+    title: 'JWT',
+    description: 'A complete authentication written in javascript using JWT',
+    imgSrc: '/static/images/auth.jpg',
+    href: 'https://github.com/simon-kurbiel/jwt-authentication',
+  },
+  {
+    title: 'dating app backend',
+    description:
+      'an ongoing project to write a backend for a dating app using python, aws, docker, mysql including other technologies',
+    imgSrc: '/static/images/dating.jpeg',
+    href: 'https://github.com/simon-kurbiel/dating',
   },
 ]
 
