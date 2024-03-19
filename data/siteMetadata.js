@@ -13,7 +13,7 @@ const siteMetadata = {
   mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'simonkurbiel7@gmail.com',
   github: 'https://github.com/simon-kurbiel',
-  twitter: 'https://twitter.com/simba_NULL',
+  // twitter: 'https://twitter.com/simba_NULL',
   facebook: 'https://facebook.com',
   youtube: 'https://youtube.com',
   linkedin: 'https://www.linkedin.com',

@@ -1,0 +1,104 @@
+---
+title: 'Mathematical Induction'
+date: '2024-03-19'
+lastmod: '2024-03-19'
+tags: ['Data Structures']
+draft: false
+summary: 'Prove the correctness of program loops, algorithms, and recursiove algorithms through mathmetical induction'
+images: ['/static/images/twitter-card.png']
+---
+
+## Introduction
+
+There are numerous prove techniques used to prove a statement. However, mathematical induction has wide applicability in computer science.
+
+<TOCInline toc={props.toc} exclude="Introduction" />
+
+## How it works
+
+Let $P(n)$ be a predicate. We need to prove that for all integers $n \ge 1$, $P(n)$ is true.
+We can accomplish the proof by induction as follows.
+
+1. (Induction Base) Prove $P(1)$ is true
+2. (Induction Step) Prove that $\forall n \ge 1$,
+   $$
+   P(n) \implies P(n+1)
+   $$
+
+The anology is similar to that of dominoes. Suppose they are aranged close together such that if you knock out block 1, then it will knock out block2 and so on and on....
+
+### Example
+
+use **induction** to prove that all integers of the type
+
+$$
+p(n) = 4^n-1
+$$
+
+are divisible by 3, for all integers $n \ge 1$
+
+**Proof** :
+
+1. for the base case, P(1) = 4-1 = 3, which is indeed divisble by three
+2. now suppose for some $n \ge 1$,
+   $$
+   P(n) = 4^n-1 \text{ is divisible by three} \quad \text{(This is the hypothesis)}
+   $$
+   We will prove that will imply that
+   $$
+   P(n+1) = 4^{n+1}-1 \text{ is also divisible by three} \quad \text{(This is the conclusion)}
+   $$
+3. Now to prove the conclusion:
+   $$
+    p(n+1) = 4^{n+1}-1 = 4*4^n-1 = 4*4^n-4+3 = 4(4^n-1)+3
+   $$
+   By hpothesis, $4^n-1$ is divisble 3. So, $4^n-1 = 3k$ for some integer k. So,
+   $$
+    P(n+1) = 4*3k+3 = 3(4k+1)
+   $$
+4. Therefore, P(n+1) is divisible by three.
+
+### Arithmetic-Sum formula example
+
+Use **induction** to prove the _Arithmetic-Sum_ formula.
+
+$$
+S(n) = 1+2+3+...+n = \frac {n(n+1)}{2}
+$$
+
+**Proof**:
+
+1. For the base base where n = 1,
+   $$
+   S(1) = \frac {1(2)}{2}= 1
+   $$
+   so the base is correct.
+2. Suppose that for some $n \ge 1$, the formula is correct:
+   $$
+   S(n) = 1+2+3+...+n = \frac {n(n+1)}{2} \quad \text{Hypothesis}
+   $$
+   we will prove that the formual is also correct for $n+1$:
+   $$
+    S(n_1) = 1+2+3...+n+(n+1) = \frac {(n+1)(n+2)}{2}
+   $$
+3. To prove the conclusion $S(n+1) = S(n) + (n+1)$
+   $$
+   \begin{align*}
+   &= \frac {n(n+1)}{2}+(n+1) \quad \text{By Hypothesis} \\
+   &= \frac {n(n+1)+2(n+1)}{2} \\
+   &= \frac {(n+1)(n+2)}{2}
+   \end{align*}
+   $$
+
+### Prove log algorithm
+
+```py
+def log(n:int)->int:
+    p:int = 0
+    m:int = n
+    while(m > 1):
+        p = p+1
+        m = m/2
+
+    return p
+```
