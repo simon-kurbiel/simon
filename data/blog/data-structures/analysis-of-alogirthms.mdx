@@ -125,9 +125,11 @@ $$
 Intuitively, when $n$ gets large, the total value will be ~$5n^2$ because the remaining terms are negligible. Now we have to prove that $T(n)$ is $O(n^2)$ by finding the positive constants $C$ and $n_0$ such that $T(n) \le Cn^2, \forall n \ge n_0$
 
 $$
-T(n) = 5n^2 + 10n+ 100 \\
-\le 5n^2 + 10n(n) + 100(n^2), n \ge 1 \\
-\le 115n^2,        n \ge 1
+\begin{align*}
+&T(n) = 5n^2 + 10n+ 100 \\
+&\le 5n^2 + 10n(n) + 100(n^2), n \ge 1 \\
+&\le 115n^2,        n \ge 1
+\end{align*}
 $$
 
 #### Example
@@ -141,9 +143,11 @@ $$
 **Proof** : first we need to get rid of the negative terms <br/>
 
 $$
-T(n) = 5n^4+20n^2+100, n ≥10, (n/10)≥1 \\
-≤5n^4+20n^2(n/10)^2+100(n/10)^4 \\
-5.21n^4, n≥10.
+\begin{align*}
+&T(n) = 5n^4+20n^2+100, n ≥10, (n/10)≥1 \\
+&≤5n^4+20n^2(n/10)^2+100(n/10)^4 \\
+&5.21n^4, n≥10.
+\end{align*}
 $$
 
 ### Lower Bound
@@ -170,10 +174,12 @@ $$
 We must show that $T(n) ≥Cn^4, ∀n ≥n_o$ for some positive constants $C,n_o$. Here we need to pick $n_o$ carefully so that the constant $C$ becomes positive.
 
 $$
-T(n) = 5n^4-10n^3+20n^2-50n+100 \\
-≥5n^4-10n^3-50n \\
-≥ 5n^4-10n^3(n/100)-50n(n/100)^3, n ≥100 \\
-≥ 4.89995n^4
+\begin{align*}
+&T(n) = 5n^4-10n^3+20n^2-50n+100 \\
+&≥5n^4-10n^3-50n \\
+&≥ 5n^4-10n^3(n/100)-50n(n/100)^3, n ≥100 \\
+&≥ 4.89995n^4
+\end{align*}
 $$
 
 ### Tight Bound
@@ -199,16 +205,20 @@ $$
 
 1. Prove $O(n^2)$
    $$
-   s(n) = 1+2+...+n \\
-   ≤ n+n+...+n \\
-   ≤n^2
+   \begin{align*}
+   &s(n) = 1+2+...+n \\
+   &≤ n+n+...+n \\
+   &≤n^2
+   \end{align*}
    $$
 2. Prove Ω$(n^2)$ <br/>
    $$
-   S(n) = 1+2+3...+n = \sum_{i=1}^{n}i \\
-   ≥ \sum_{i=\frac{n}{2}}^{n}i \\
-   ≥ \sum_{i=\frac{n}{2}}^{n} |\frac{n}{2}| \\
-   ≥ |\frac{n}{2}| \cdot |\frac{n}{2}| ≥ \frac{n^2}{4}
+   \begin{align*}
+   &S(n) = 1+2+3...+n = \sum_{i=1}^{n}i \\
+   &≥ \sum_{i=\frac{n}{2}}^{n}i \\
+   &≥ \sum_{i=\frac{n}{2}}^{n} |\frac{n}{2}| \\
+   &≥ |\frac{n}{2}| \cdot |\frac{n}{2}| ≥ \frac{n^2}{4}
+   \end{align*}
    $$
 
 ## Analysis

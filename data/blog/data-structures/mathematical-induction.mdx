@@ -32,7 +32,7 @@ The anology is similar to that of dominoes. Suppose they are aranged close toget
 use **induction** to prove that all integers of the type
 
 $$
-p(n) = 4^n-1
+P(n) = 4^n-1
 $$
 
 are divisible by 3, for all integers $n \ge 1$
@@ -99,6 +99,99 @@ def log(n:int)->int:
     while(m > 1):
         p = p+1
         m = m/2
-
     return p
 ```
+
+We want to **prove** the following program computes and returns $\log_2n$,
+assuming that the input parameter $n$ is an integer power of 2.
+
+Let $p_k$ and $m_k$ denote the resulting values of the variables $p$ and $k$ after iteration k of the
+while look, where $k = 0, 1, 2,...$. Here, $k = 0$ represents the values after the initialization
+and just before the first execution of the while loop; $k = 1$ represents the values after
+the first execution of the while loop, and so on.
+
+1. First use induction to prove that after the $k^{th}$
+   iteration of the while loop,
+   $$
+   p_k = k, m_k = \frac {n} {2^k} \quad \text{(Loop Invariant)}
+   $$
+   (These relations are called loop-invariant.)
+2. Then conclude that the return value of the program is $\log_2n$.
+
+**Proof**:
+The induction is on the number of iteration $k$. For the induction base, $k = 0$, the
+results after the initialization and just before the first iteration is $p_0 = 0$, $m_0 = \frac {n}{2^0} = n$. So the base is correct.
+
+Now suppose after iteration $k$ of the while loop, for some $k \ge 0$,
+
+$$
+p_k = k, m_k = \frac {n}{2^k}
+$$
+
+Then the next iteration will increment $p$ by 1, and divide $m$ by 2. So the result after iteration $k+1$ will be:
+
+$$
+p_{k+1} = p_k+1 = k+1, m_{k+1} = \frac {m_k}{2} = \frac {n}{2^{k+1}}
+$$
+
+This completes the induction proof. So, the Loop Invariant is proved for all $k$.
+At the end, when the while loop terminates, $m = 1$. So, $p = k$, $1= \frac {n}{2^k}$.
+
+This means $n = 2k = 2p$. Therefore, $p =\log_2n$. And this is the value returned by the program.
+
+### Recurrence Equation
+
+Let's consider a recurrence equation
+
+$$
+T(n)=
+\begin{cases}
+2T(\lfloor \frac{n}{2} \rfloor)+1 & \quad \text{when $n \geq 2$}\\
+1 & \quad \text{otherwise $n=1$}
+\end{cases}
+$$
+
+(The symbol $\lfloor \rfloor$ is the _floor_ operation, which rounds down a real number to its nearest integer. For example, $\lfloor 3.28 \rfloor = 3$.)
+
+The following table shows the result of $T(n)$ for values of $n=1,2,3,4,....,16$
+
+| n    | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   | 10  | 11  | 12  | 13  | 14  | 15  | 16  |
+| ---- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| T(n) | 1   | 3   | 3   | 7   | 7   | 7   | 7   | 15  | 15  | 15  | 15  | 15  | 15  | 15  | 15  | 31  |
+
+Now let us use **induction** to prove $T(n)$ has the following lower and upper bounds.
+
+$$
+n ≤T(n) ≤2n-1, n ≥1
+$$
+
+**proof of the upper bound**: Prove by induction on $n$ that
+
+$$
+T(n) ≤2n-1, n ≥1
+$$
+
+1. in this case, we only need one base case, $n=1$
+   $$
+   T(1) = 1 \le 2n-1 = 2 \cdot 1-1 = 1,
+   $$
+   so the base is correct
+2. Now, to prove the upper bound for any $n \ge 2$, suppose the bound is true for all smaller values of $n$. That is, $T(m) \le 2m-1, \forall m < n$. In particular, for $m = \lfloor \frac {n}{2} \rfloor$, the hypothesis is:
+   $$
+   𝑇 (⌊\frac{n}{2}⌋) ≤ 2 ⌊\frac{n}{2}⌋ − 1
+   $$
+3. Then,
+
+   $$
+   \begin{align*}
+   &T(n) = 2T(⌊\frac{n}{2}⌋) +1 \quad \text{ Start with the recurrence equation} \\
+   &≤ 2(2⌊\frac{n}{2}⌋ -1)+1    \quad \text{Use the hypothesis} \\
+   &≤2(2 \cdot \frac{n}{2}-1)+1 \quad \text{Observe that $⌊\frac{n}{2}⌋ ≤\frac{n}{2}$} \\
+   &≤2(n-1)+1 \\
+   &≤2n-1
+   \end{align*}
+   $$
+
+**proof** of the lower bound: It is similar to the upper-bound.
+
+Hint: Use the relation $\lfloor \frac {n}{2} \rfloor \ge \frac {n-1}{2}$
