@@ -1,0 +1,83 @@
+---
+title: 'Recursive algorithms'
+date: '2024-03-20'
+lastmod: '2024-03-20'
+tags: ['Data Structures']
+draft: false
+summary: 'a look into Recursive algorithms, recurrences, and divide and conquer'
+images: ['/static/images/twitter-card.png']
+---
+
+## Introduction
+
+In this section, we will uncover recursive algorithms and study their correctness using induction.
+
+<TOCInline toc={props.toc} exclude="Introduction" />
+
+## Recursive algorithm
+
+### Compute Array Sum
+
+Below is a simple recursive algorithms that sums the elements in an array.
+
+$$
+S = \sum_{i= 0}^{n-1} array[i]
+$$
+
+```py
+def compute_sum(array:list, length:int)->int:
+    if(length == 0):
+        return array[length]
+    return array[length]+compute_sum(array, length-1)
+```
+
+## Recurrence Equation
+
+Let us take a look at some recurrence equations to analyze time complexity
+
+### Tower of Hanoi
+
+The tower of hanoi problem has this recurrence equation for $f(n)$
+
+$$
+\begin{align*}
+f(n)=
+\begin{cases}
+1, & \quad n=1 \\
+2f(n-1) + 1 & \quad n≥2
+\end{cases}
+\end{align*}
+$$
+
+We need to solve this recurrence equation to find $f(n)$ directly in terms of n. There are different ways to solve this problem. We will first tackle this problem using substitution. However there is an easier method using the [master theorem](<https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)>) which we will look at later on.
+
+here is the solution.
+
+$$
+\begin{align*}
+&f(n) = 1+2 ⋅f(n-1) \\
+&f(n) = 1+2+4 ⋅f(n-2) \\
+&f(n) = 1+2+4+8 ⋅ f(n-3) \\
+&f(n) = 1+2+2^2+2^3⋅f(n-3)
+\end{align*}
+$$
+
+after a few substitutions, we can observe the general pattern, and see what is needed to get to the point where the last term becomes $f(1)$
+
+$$
+f(n) = 1+2+2^2+2^3+...+2^{n-1}⋅f(1)
+$$
+
+Then we can use the base case of the recurrence equation, $f(1)=1$
+
+$$
+f(n) = 1+2+2^2+2^3+...+2^{n-1}
+$$
+
+we use the geometric sum and find that
+
+$$
+f(n)=2^n-1
+$$
+
+### Compute power by repeated multiplications
