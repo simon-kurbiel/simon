@@ -1,1 +1,206 @@
+---
+title: 'Recursive algorithms'
+date: '2024-03-20'
+lastmod: '2024-03-20'
+tags: ['Data Structures']
+draft: false
+summary: 'a look into Recursive algorithms, recurrences, and divide and conquer'
+images: ['/static/images/twitter-card.png']
+---
 
+## Introduction
+
+In this section, we will uncover recursive algorithms and study their correctness using induction.
+
+<TOCInline toc={props.toc} exclude="Introduction" />
+
+## Recursive algorithm
+
+### Compute Array Sum
+
+Below is a simple recursive algorithms that sums the elements in an array.
+
+$$
+S = \sum_{i= 0}^{n-1} array[i]
+$$
+
+```py
+def compute_sum(array:list, length:int)->int:
+    if(length == 0):
+        return array[length]
+    return array[length]+compute_sum(array, length-1)
+```
+
+## Recurrence Equation
+
+Let us take a look at some recurrence equations to analyze time complexity
+
+### Tower of Hanoi
+
+The tower of hanoi problem has this recurrence equation for $f(n)$
+
+$$
+\begin{align*}
+f(n)=
+\begin{cases}
+1, & \quad n=1 \\
+2f(n-1) + 1 & \quad n≥2
+\end{cases}
+\end{align*}
+$$
+
+We need to solve this recurrence equation to find $f(n)$ directly in terms of n. There are different ways to solve this problem. We will first tackle this problem using substitution. However there is an easier method using the [master theorem](<https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms)>) which we will look at later on.
+
+here is the solution.
+
+$$
+\begin{align*}
+&f(n) = 1+2 ⋅f(n-1) \\
+&f(n) = 1+2+4 ⋅f(n-2) \\
+&f(n) = 1+2+4+8 ⋅ f(n-3) \\
+&f(n) = 1+2+2^2+2^3⋅f(n-3)
+\end{align*}
+$$
+
+after a few substitutions, we can observe the general pattern, and see what is needed to get to the point where the last term becomes $f(1)$
+
+$$
+f(n) = 1+2+2^2+2^3+...+2^{n-1}⋅f(1)
+$$
+
+Then we can use the base case of the recurrence equation, $f(1)=1$
+
+$$
+f(n) = 1+2+2^2+2^3+...+2^{n-1}
+$$
+
+we use the geometric sum and find that
+
+$$
+f(n)=2^n-1
+$$
+
+### Compute power by repeated multiplications
+
+suppose we want to calculate $X^n$ by repeated multiplications. Here is one way of doing it using a loop, where $n \ge 1$.
+
+```py
+def pow(x:int, n:int)->int:
+    total = x
+    for i in range(1,n):
+        total*=x
+    return total
+```
+
+However this approach is inefficient because the power goes up by 1 each operation. How can we speed this up?
+
+We can do this by repeated squaring, thus doubling the power by each multiplication. First consider **special case** when $n=2^k$ for some integre $k \ge 1$.
+
+```py
+import math
+def pow2(x:int, n:int)->int:
+
+    k:int= int(math.log(n,2))
+    total:int = x
+    print()
+    for i in range(1,k+1):
+        total*=total
+    return total
+```
+
+Now lets generalize this algorithm so it works for any $n$. Lets consider a numerical example such as $X^{13}$, where 13 is a decimal number. Since $13 = 8+4+1$, we first apply repeated suaring to get $X^2, X^4, X^8$. Then multiply together $(X, X^4, X^8)$ to get $X^{13}$. The computation can be done as follows:
+
+- Square: $X^2$ = $X \cdot X$
+- Square: $X^4$ = $X^2 \cdot X^2$
+- Square: $X^8$ = $X^4 \cdot X^4$
+- Multiply together $(X, X^4, X^8)$ to get $X^{13}$.
+
+Now lets see how we can implement the algorithm recursively.
+
+```py
+def power(x:int, n:int)->int:
+    if n == 1:
+        return x
+    total = power(x, int(n/2))
+    total*=total
+    if n%2 == 1:
+        total*=x
+    return total
+```
+
+#### Analysis
+
+Let f(n) be the worst-case number of multiplications steps to compute $X^n$. The number of multiplications made by the recursive call is $f(\lfloor \frac {n}{2} \rfloor)$. The recursive call is then followed by one more multiplication. And in the worst-case, if $n$ is odd, the one additional multiplication will be performed. Therefore, the recurrence equation can be written as:
+
+$$
+\begin{align*}
+f(n)=
+\begin{cases}
+0, & \quad n=1 \\
+f( \lfloor \frac {n}{2} \rfloor) + 2 & \quad n≥2
+\end{cases}
+\end{align*}
+$$
+
+Let us prove by **induction** that the solution is as follows, where the $\log$ is in base 2.
+
+$$
+f(n) = 2 \lfloor \log_n \rfloor
+$$
+
+1. **base case**, $n=1$, from the recurrence, $f(1) = 0$. the claimed solution is $f(1) = 2 \lfloor log_21 \rfloor = 0$. So the base is correct
+2. **induction step**: integer $n$ may be expressed as follows, for some integer $k$.
+
+   $$
+   2^k \le n < 2^{k+1}
+   $$
+
+   This means that $ \lfloor \log_2n \rfloor = k$. Also,
+
+   $$
+    2^{k-1} \le \lfloor \frac {n}{2} \rfloor < 2^k
+   $$
+
+   Thus, $ \lfloor \log_2 \lfloor \frac {n}{2} \rfloor \rfloor = k-1$. To prove the claimed solution for any $n \ge 2$, suppose the solution is correct for all smaller values. That is,
+
+   $$
+    f(m) = 2 \lfloor \log m \rfloor, \quad \forall m < n
+   $$
+
+   In particular, for $m = \lfloor \frac {n}{2} \rfloor $,
+
+   $$
+    f(\lfloor \frac {n}{2} \rfloor) = 2 \lfloor \log_2 \lfloor \frac {n}{2} \rfloor \rfloor = 2(k-1) = 2k-2
+   $$
+
+   Then,
+
+   $$
+    f(n) =  f(\lfloor \frac {n}{2} \rfloor) + 2 = 2k-2+2 = 2k = 2 \lfloor \log_2n \rfloor
+   $$
+
+3. This concludes the induction proof
+
+## Divide and conquer algorithms
+
+The _divide-and-conquer_ is a recursive strategy to divide problems of give size into smaller subproblems of the same type but different size. Then, supposing that the smaller size subproblems are solved recursively, the strategy is to try to obtain the solution to the original problem. Heres a simple example.
+
+### Finding max by divide and conquer
+
+```py
+def max_recursive(array:list):
+    if(len(array) == 1):
+        return array[0]
+    bp:int = int(len(array)/2)
+    T1:int = max_recursive(array[0:bp])
+    T2:int = max_recursive(array[bp:])
+    if T1> T2:
+        return T1
+    return T2
+```
+
+The algorithm is simple. It divides the array into two halves, finds the maximum of each have, compares them and returns the maximum value of the entire array.
+
+#### Analysis
+
+More to come...
