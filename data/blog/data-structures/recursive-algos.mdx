@@ -201,6 +201,71 @@ def max_recursive(array:list):
 
 The algorithm is simple. It divides the array into two halves, finds the maximum of each have, compares them and returns the maximum value of the entire array.
 
-#### Analysis
+#### Analysis for special case
 
-More to come...
+suppose $n=2^k$
+
+let $f(n)$ be the number of comparisons to find the maximum in an array. To simply the analysis, we assume that $n=2^k$, for some integer $k$. In this case, the size of each half is exactly $\frac {n}{2}$, and the number of comparisons to find the max of each half is $f \frac {n}{2}$.
+
+$$
+\begin{align*}
+f(n)=
+\begin{cases}
+0, & \quad n=1 \\
+2f( \frac {n}{2}) + 1 & \quad n≥2
+\end{cases}
+\end{align*}
+$$
+
+we can easily solve this by substitution.
+
+$$
+\begin{align*}
+&f(n) = 1+2f(\frac{n}{2}) \\
+&f(n) = 1+2[1+2f(\frac{n}{4})] = 1+2+4f(\frac{n}{4}) \\
+&f(n) = 1+2+4[1+2f(\frac{n}{8})] = 1+2+4+8f(\frac{n}{8}) \\
+&f(n) = 1+2+4+...+2^{k-1}+2^kf(\frac{n}{2^k}) \\
+&f(n) = 1+2+4+...+2^{k-1} \quad \text{Use Geometric Sum Formula}\\
+&f(n) = \frac{2^k-1}{2-1} = 2^k-1 \\
+&f(n) = n-1 \\
+\end{align*}
+$$
+
+#### Analysis and proof for generlal n
+
+The recurrence equation becomes:
+
+$$
+\begin{align*}
+f(n)=
+\begin{cases}
+0, & \quad n=1 \\
+f( \frac {n}{2})+f( \frac {n}{2}) + 1 & \quad n≥2
+\end{cases}
+\end{align*}
+$$
+
+it's easy to prove that the solution is still $f(n)=n-1$
+
+1. **base case**, $n=1$, $f(n) = 0 = 1-1$, checks out.
+2. Now, suppose that $f(m) = m-1$, $\forall m < n$. In particluar, for case where $m = \frac {n}{2}$, the hypothesis is that
+
+$$
+\begin{align*}
+f(\frac {n}{2}) = \frac {n}{2} -1\\
+\end{align*}
+$$
+
+3. Then,
+   $$
+   \begin{align*}
+    &f(n) = f( \frac {n}{2})+f( \frac {n}{2}) + 1 \quad \text{Use recurrence equation}\\
+    &f(n) = 2(\frac {n}{2}-1)+1 \quad \text{using hypothesis} \\
+    &f(n) = n-2+1 \\
+    &f(n) = n-1 \\
+   \end{align*}
+   $$
+
+## More algorithms
+
+1. [Binary Search Algorithm](/blog/data-structures/binary-search)
