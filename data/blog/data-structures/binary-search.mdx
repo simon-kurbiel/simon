@@ -16,13 +16,13 @@ The sequential search works on an unsorted array and runs in $O(n)$ time. But if
 
 ## How it works
 
-The algorithm is very simple. Given a sorted array, $array[0:n-1]$, and a serach key, the algorithm starts comparising the search key against the **middle** element of the array, $array[m]$. Then it follows these steps.
+The algorithm is very simple. Given a sorted array, $array[0:n-1]$, and a serach key, the algorithm starts comparing the search key against the **middle** element of the array, $array[m]$. Then it follows these steps.
 
 1. if $KEY = array[m]$, simply return m.
-2. if $KEY > array[m]$, the recursively the right half othe array.
-3. if $KEY < array[m]$, the recursively the left half othe array.
+2. if $KEY > array[m]$, recursively search through the right half othe array.
+3. if $KEY < array[m]$, recursively search through the left half othe array.
 
-As we can see, after one operation, the size is ruded to $\frac {n}{2}$. After a second operation, the size is ruded to $\frac {n}{4}$ and so on. So in the worst case scenario, the algorithms will make $\log_2n$ comparisons. here is the code below.
+As we can see, after one operation, the size is reduced to $\frac {n}{2}$. After a second operation, the size is reduced to $\frac {n}{4}$ and so on. So in the worst case scenario, the algorithms will make $\log_2n$ comparisons. Here is the code below.
 
 ### Algorithm
 
@@ -42,7 +42,7 @@ def binary_search(array:list,left:int, right:int, key:int)->int:
 
 when $n=2^k$,
 
-we will assume that both the key comparisons as one sinle comparison. That is because that they are between the same pair of elements. Under the hood(assembly), the machine will probably do some optimization to count them as single one operation, thus we will consider them to be one. In that case
+we will combine both key comparisons as one single comparison. That is because they are between the same pair of elements. Under the hood(assembly), the machine will probably do some optimization to count them as a single operation, thus we will consider them to be one. In that case
 
 $$
 \begin{align*}
