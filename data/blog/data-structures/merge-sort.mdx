@@ -107,6 +107,7 @@ def merge_sort(array:list):
                 j+=1
             k+=1
 
+
         while i < len(L):
             array[k] = L[i]
             i+=1
@@ -122,3 +123,43 @@ merge_sort(array=array)
 print(array)
 
 ```
+
+### Analysis for special case
+
+when $n=2^k$
+
+Let $T(n)$ be the worst-case time to sort $n$ elements (by recursive Mergesort). The worst-case time to recursively sort each half is $T(\frac {n}{2})$. And the time to merge the two sorted halves is $O(n)$, which means $\le cn$ for some constant $c$. Therefore,
+
+$$
+\begin{align*}
+f(n) =
+\begin{cases}
+2T(\frac {n}{2})+cn, & \quad n \ge 2 \\
+d, & \quad n=1
+
+\end{cases}
+
+\end{align*}
+$$
+
+Solving by substitution we get
+
+$$
+\begin{align*}
+&T(n) \le cn+2T(\frac{n}{2}) \\
+&\le cn+2(c \frac {n}{2} + 2T(\frac {n}{4}))
+& \le cn +cn+4T(\frac {n}{4}) \\
+& \le cn+cn+cn+8T(\frac {n}{8}) \\
+& \le 3cn+2^3T(\frac {n}{2^3}) \\
+& \le kcn+2^k T(\frac {n}{2^k}) \\
+& \le kcn+2^kT(1) \\
+& \le kcn + d2^k \\
+& \le cn \log_2n+dn
+\end{align*}
+$$
+
+Therefore,
+
+$$
+\boxed{T(n) \text{ is } O(n \log_2n)}
+$$

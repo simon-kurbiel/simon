@@ -1,0 +1,113 @@
+---
+title: 'Master Theorem'
+date: '2024-04-7'
+lastmod: '2024-04-7'
+tags: ['Data Structures']
+draft: false
+summary: 'A look into solutions for general class of recurrence equations through the Master Theorem.'
+images: ['/static/images/twitter-card.png']
+---
+
+## Introduction
+
+Although solving by substitution is one great way of solving a recurrence equation/relation problem, the master theorem provides an easier alternative to solve a general class of a problem.
+
+<TOCInline toc={props.toc} exclude="Introduction" />
+
+## General Form
+
+The following is a general form of recurrences which commonly arise in divide-and-conquer algorithms. ($a,b,c,d$ and $\beta$ are constants determined by the specific algorithm, and $n= b^k$ for some integer $k$.)
+
+$$
+T(n)
+\begin{cases}
+a \cdot T(\frac {n}{b}) + c \cdot n^ \beta, & \quad n > 1 \\
+d, & \quad n=1
+\end{cases}
+$$
+
+1. The term $T(\frac {n}{b})$ represents the time for solving each subproblem.
+2. And the term $cn^ \beta$ represents the additional work for "combining" the solutions of the subproblems to find the overall solution.
+
+### Solutions.
+
+Let $h = \log_ba$. The solution has the following general forms and bounds. (A and B are some constants for each case.)
+
+$$
+\boxed{T(n) =
+\begin{cases}
+An^h+Bn^ \beta = \Theta (n^h) & \quad h > \Beta \\
+An^h+Bn^ \beta = \Theta (n^ \beta) & \quad h < \Beta \\
+An^h \log_2n+Bn^ \beta = \Theta (n^h \log_2n) & \quad h = \Beta
+\end{cases}}
+
+
+$$
+
+## Examples
+
+### Finding max of array
+
+Finding the max of an array by divide and conquer for the case when $n=2^k$ is:
+
+$$
+f(n)=
+\begin{cases}
+0, & \quad n=1 \\
+2f(\frac {n}{2})+1, & \quad n \ge 2
+\end{cases}
+$$
+
+Let us apply our Masterm Theorem to find the solution form.
+
+$$
+\begin{align*}
+&a=2,b=2, \beta = 0 \\
+&h= \log_22 = 1
+\end{align*}
+$$
+
+Since $h \ne \beta$, the solution form is
+
+$$
+\begin{align*}
+&f(n) = An^h+Bn^ \beta \\
+&= An+B
+\end{align*}
+$$
+
+**Finding The constants A and B**
+In this case, simce we know the solution form is correct, we just need to plug in values for n.
+
+$n=1$:
+
+$$
+\begin{align*}
+&f(1) = 0 \quad \text{from the recurrence} \\
+&=A+B \quad \text{from the solution form}
+\end{align*}
+$$
+
+$n=2$:
+
+$$
+\begin{align*}
+&f(2) = 2f(1)+1 = 2 \cdot 0+1=1 \\
+&=2A+B
+\end{align*}
+$$
+
+So we have two equations:
+
+$$
+\begin{cases}
+A+B = 0 \\
+2A+B=1
+\end{cases}
+$$
+
+We find the constants $A=1, B=-1$. Therefore,
+
+$$
+\boxed{f(n) = n-1}
+$$
