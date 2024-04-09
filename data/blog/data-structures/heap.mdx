@@ -1,0 +1,28 @@
+---
+title: 'Heap'
+date: '2024-04-10'
+lastmod: '2024-04-10'
+tags: ['Data Structures']
+draft: false
+summary: 'A look into the heap data structure that implements the priority queue'
+images: ['/static/images/data-structures.png']
+---
+
+<TOCInline toc={props.toc} exclude="Introduction" />
+## Introduction
+A heap is a data-structure that implements a priority queue, by using a complete-binary-
+tree. Each node of the tree contains one element, and they are organized by their key values, such that
+$$
+\text{key of every node ≤ keys of its left and right children}.
+$$
+Therefore, the root has the smallest key value. Below is an example heap with 6
+nodes. The values inside the nodes are the key values.
+![heap](https://www.programiz.com/sites/tutorial2program/files/minheap_0.png)
+
+Finally, a heap of $n$ nodes is represented efficiently by an array $A[1: n]$, where $A[i]$
+represents node $i$. For example, the array representation of the above heap is as shown
+below.
+
+| i    | 1   | 2   | 3   | 4   | 5   | 6   |
+| ---- | --- | --- | --- | --- | --- | --- |
+| A[i] | 1   | 2   | 3   | 4   | 5   | 9   |
